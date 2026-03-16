@@ -1,0 +1,39 @@
+{
+  "common": {
+    "appName": "Flutter Riverpod Template",
+    "ok": "OK",
+    "cancel": "Cancel",
+    "error": "Error"
+  },
+  "home": {
+    "title": "Home",
+    "welcome": "Welcome to the App!",
+    "testAssets": "Test Theme-Aware Assets",
+    "architecture": "Senior Level Flutter Architecture",
+    "features": {
+      "riverpod": "Riverpod State Management",
+      "i18n": "Multi-language (slang)",
+      "router": "GoRouter (Robust Routing)",
+      "theme": "Custom Theme Extensions"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "theme": "Theme",
+    "language": "Language",
+    "appInfo": "App Information",
+    "version": "Version",
+    "buildNumber": "Build Number",
+    "packageName": "Package Name"
+  },
+  "images": {
+    "title": "Assets & Theme Check",
+    "description": "This page verifies that assets correctly switch between Light and Dark mode variations based on the current theme.",
+    "icons": "Dynamic Icons (SVGs)",
+    "images": "Dynamic Images",
+    "visible": "Visible Icon",
+    "invisible": "Invisible Icon",
+    "appLogo": "App Logo / Primary Image",
+    "toggleHint": "Toggle theme in Settings to see changes here"
+  }
+}

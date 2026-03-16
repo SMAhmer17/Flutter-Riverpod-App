@@ -1,0 +1,39 @@
+{
+    "common": {
+        "appName": "Modèle Flutter Riverpod",
+        "ok": "OK",
+        "cancel": "Annuler",
+        "error": "Erreur"
+    },
+    "home": {
+        "title": "Accueil",
+        "welcome": "Bienvenue dans l'application !",
+        "testAssets": "Tester les ressources thématiques",
+        "architecture": "Architecture Flutter de niveau senior",
+        "features": {
+            "riverpod": "Gestion d'état avec Riverpod",
+            "i18n": "Multilingue (slang)",
+            "router": "GoRouter (Routage Robuste)",
+            "theme": "Extensions de thème personnalisées"
+        }
+    },
+    "settings": {
+        "title": "Paramètres",
+        "theme": "Thème",
+        "language": "Langue",
+        "appInfo": "Informations sur l'application",
+        "version": "Version",
+        "buildNumber": "Numéro de build",
+        "packageName": "Nom du package"
+    },
+    "images": {
+        "title": "Vérification des ressources et du thème",
+        "description": "Cette page vérifie que les ressources basculent correctement entre les variations des modes clair et sombre en fonction du thème actuel.",
+        "icons": "Icônes dynamiques (SVGs)",
+        "images": "Images dynamiques",
+        "visible": "Icône visible",
+        "invisible": "Icône invisible",
+        "appLogo": "Logo de l'application / Image principale",
+        "toggleHint": "Basculez le thème dans les paramètres pour voir les changements ici"
+    }
+}
