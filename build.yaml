@@ -1,0 +1,24 @@
+# ————————————————— Build Runner Config —————————————————
+#
+# Controls how build_runner generates code for Freezed + json_serializable.
+# Run: dart run build_runner build --delete-conflicting-outputs
+
+targets:
+  $default:
+    builders:
+
+      # ————————————————— json_serializable —————————————————
+      json_serializable:
+        options:
+          # Generates explicit toJson on nested objects (required for Firestore maps).
+          explicit_to_json: true
+          # Use field names as-is unless @JsonKey overrides them.
+          field_rename: none
+
+      # ————————————————— Freezed —————————————————
+      freezed:
+        options:
+          # Generates copyWith, ==, hashCode, toString, and pattern-matching
+          # helpers on all @freezed classes.
+          map: true
+          when: true
