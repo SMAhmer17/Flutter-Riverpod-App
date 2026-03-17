@@ -1,8 +1,7 @@
-// ————————————————— Dependencies —————————————————
+
 
 import 'package:hive_flutter/hive_flutter.dart';
 
-// ————————————————— Hive Store —————————————————
 
 /// Wrapper around a Hive [Box]. Each instance manages one named box.
 /// Use [HiveStore.open] to initialise, or inject an already-open box.
@@ -18,13 +17,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 /// final settingsStore = await HiveStore.open('settings');
 /// ```
 class HiveStore {
-  // ————————————————— Fields —————————————————
-
   final Box _box;
-
-  // ————————————————— Constructor —————————————————
-
-  /// Inject an already-open [Box] directly (useful for testing).
   HiveStore(this._box);
 
   // ————————————————— Init —————————————————
