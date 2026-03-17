@@ -1,35 +1,24 @@
-// ————————————————— Dependencies —————————————————
-
 import 'dart:convert';
 import 'dart:math';
-
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
-// ————————————————— Auth Data Source —————————————————
 
 class AuthDataSource {
-  // ————————————————— Fields —————————————————
 
   final FirebaseAuth _auth;
-  final GoogleSignIn _googleSignIn;
 
-  // ————————————————— Constructor —————————————————
 
-  AuthDataSource({
-    required FirebaseAuth auth,
-    GoogleSignIn? googleSignIn,
-  })  : _auth = auth,
-        _googleSignIn = googleSignIn ?? GoogleSignIn();
+  AuthDataSource({required FirebaseAuth auth}) : _auth = auth;
 
-  // ————————————————— Auth State Stream —————————————————
+  // —————————————————————————————————— Auth State Stream ——————————————————————————————————
 
   /// Emits a [User] whenever the auth state changes (sign-in / sign-out).
   Stream<User?> get authStateChanges => _auth.authStateChanges();
 
-  // ————————————————— Email & Password —————————————————
+  // —————————————————————————————————— Email & Password ——————————————————————————————————
 
   /// Signs in an existing user with [email] and [password].
   Future<UserCredential> signInWithEmailAndPassword({
@@ -70,35 +59,33 @@ class AuthDataSource {
     }
   }
 
-  // ————————————————— Google Sign-In —————————————————
+  // —————————————————————————————————— Google Sign-In ——————————————————————————————————
 
   /// Opens the Google sign-in flow and authenticates with Firebase.
   Future<UserCredential> signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAccount googleUser =
+          await GoogleSignIn.instance.authenticate();
 
-      if (googleUser == null) {
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        idToken: googleUser.authentication.idToken,
+      );
+
+      return await _auth.signInWithCredential(credential);
+    } on GoogleSignInException catch (e) {
+      if (e.code == GoogleSignInExceptionCode.canceled) {
         throw FirebaseAuthException(
           code: 'sign-in-cancelled',
           message: 'Google sign-in was cancelled by the user.',
         );
       }
-
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
-
-      final OAuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      return await _auth.signInWithCredential(credential);
+      rethrow;
     } on FirebaseAuthException {
       rethrow;
     }
   }
 
-  // ————————————————— Apple Sign-In —————————————————
+  // —————————————————————————————————— Apple Sign-In ——————————————————————————————————
 
   /// Opens the Apple sign-in flow and authenticates with Firebase.
   /// A SHA-256 nonce is used to prevent replay attacks.
@@ -128,7 +115,7 @@ class AuthDataSource {
     }
   }
 
-  // ————————————————— Phone Auth —————————————————
+  // —————————————————————————————————— Phone Auth ——————————————————————————————————
 
   /// Sends an OTP to [phoneNumber] and triggers the appropriate callbacks.
   ///
@@ -178,7 +165,7 @@ class AuthDataSource {
     }
   }
 
-  // ————————————————— Anonymous Sign-In —————————————————
+  // —————————————————————————————————— Anonymous Sign-In ——————————————————————————————————
 
   /// Signs the user in anonymously, creating a temporary Firebase account.
   Future<UserCredential> signInAnonymously() async {
@@ -189,7 +176,7 @@ class AuthDataSource {
     }
   }
 
-  // ————————————————— Account Management —————————————————
+  // —————————————————————————————————— Account Management ——————————————————————————————————
 
   /// Re-authenticates the current user with [email] and [password].
   /// Must be called before sensitive operations (delete, password change)
@@ -219,6 +206,8 @@ class AuthDataSource {
     }
   }
 
+    // —————————————————————————————————— Delete Account ——————————————————————————————————
+
   /// Permanently deletes the current user's Firebase account.
   /// Re-authentication may be required before calling this.
   Future<void> deleteAccount() async {
@@ -238,12 +227,15 @@ class AuthDataSource {
     }
   }
 
+    // —————————————————————————————————— Sign out ——————————————————————————————————
+
+
   /// Signs the current user out of Firebase (and Google if applicable).
   Future<void> signOut() async {
     try {
       await Future.wait([
         _auth.signOut(),
-        _googleSignIn.signOut(),
+        GoogleSignIn.instance.signOut(),
       ]);
     } on FirebaseAuthException {
       rethrow;
