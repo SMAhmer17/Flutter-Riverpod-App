@@ -1,0 +1,16 @@
+
+class HttpServiceException implements Exception {
+  final int? statusCode;
+  final String message;
+  final dynamic data;
+
+
+  const HttpServiceException({
+    required this.message,
+    this.statusCode,
+    this.data,
+  });
+
+  @override
+  String toString() => 'HttpServiceException($statusCode): $message';
+}

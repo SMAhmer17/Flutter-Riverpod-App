@@ -8,8 +8,7 @@ class PrimaryButton extends StatelessWidget {
   final VoidCallback? onTap;
   final bool isLoading;
 
-  /// Corner radius of the button. Defaults to [16].
-  /// Use a higher value (e.g., 32) for pill-shaped auth buttons.
+
   final double borderRadius;
 
   const PrimaryButton({
@@ -17,7 +16,7 @@ class PrimaryButton extends StatelessWidget {
     required this.title,
     this.onTap,
     this.isLoading = false,
-    this.borderRadius = 16, // ✅ Fixed: replaced opaque isAuthBtn flag
+    this.borderRadius = 16, 
   });
 
   @override
@@ -114,7 +113,7 @@ class CustomOutlineButton extends StatelessWidget {
     this.btnWidth,
     this.outlineColor,
     this.textColor,
-    this.isDisabled = false, // ✅ renamed from isDisable for clarity
+    this.isDisabled = false,
   });
 
   @override
